@@ -1,30 +1,42 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <nav class="navbar navbar-light bg-light">
+    <p class="navbar-brand">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        v-if="$route.path != '/'"
+        @click="$router.push('/')"
+      >
+        <i class="bi bi-chevron-left"></i>返回</button
+      >Bing每日一图
+    </p>
   </nav>
-  <router-view />
+  <div id="liveAlertPlaceholder"></div>
+  <router-view v-slot="{ Component }">
+    <transition name="fade">
+      <div>
+        <component :is="Component" />
+      </div>
+    </transition>
+  </router-view>
 </template>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+<script>
+import { data, base } from "./store/index";
+export default {
+  setup() {
+    require("axios")
+      .default.get(base + "data.json")
+      .then(function (response) {
+        data.value = response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
+  data() {
+    return {
+      data,
+    };
+  },
+};
+</script>
