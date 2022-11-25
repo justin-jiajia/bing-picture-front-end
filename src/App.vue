@@ -1,16 +1,9 @@
 <template>
-  <nav class="navbar navbar-light bg-light">
-    <p class="navbar-brand">
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        v-if="$route.path != '/'"
-        @click="$router.push('/')"
-      >
-        <i class="bi bi-chevron-left"></i>返回</button
-      >Bing每日一图
-    </p>
-  </nav>
+  <div class="f">
+    <br />
+    <h2>Bing每日一图</h2>
+  </div>
+  <hr />
   <div id="liveAlertPlaceholder"></div>
   <router-view v-slot="{ Component }">
     <transition name="fade">
@@ -27,7 +20,7 @@ export default {
     require("axios")
       .default.get(base + "data.json")
       .then(function (response) {
-        data.value = response.data;
+        data.value = response.data.reverse();
       })
       .catch(function (error) {
         console.log(error);
@@ -40,3 +33,8 @@ export default {
   },
 };
 </script>
+<style>
+.f {
+  text-align: center;
+}
+</style>

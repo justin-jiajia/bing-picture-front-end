@@ -1,7 +1,12 @@
 <template>
-  <div class="row row-cols-1 row-cols-md-4 g-3">
-    <div class="col" v-for="picture in data" :key="picture">
-      <picture-composition :picture="picture" :index="data.indexOf(picture)" />
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+      <div class="col" v-for="picture in data" :key="picture">
+        <picture-composition
+          :picture="picture"
+          :index="data.indexOf(picture)"
+        />
+      </div>
     </div>
   </div>
 </template>

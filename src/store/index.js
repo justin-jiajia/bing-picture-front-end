@@ -1,4 +1,4 @@
 import { ref } from "vue";
 const data = ref();
-const base = "https://bing.yanjiajia.cn/";
+const base = "https://picture.api.hijiajia.xyz/";
 export { data, base };

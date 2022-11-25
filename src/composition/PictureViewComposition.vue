@@ -25,9 +25,6 @@
               @click="downLoadImg(base + picture.file_name, picture.tittle)"
               ><i class="bi bi-download"></i>下载</a
             >
-            <a class="btn btn-outline-primary"
-              ><i class="bi bi-box-arrow-up"></i>分享</a
-            >
           </div>
         </div>
       </div>
@@ -36,7 +33,6 @@
 </template>
 <script>
 import { base } from "../store/index";
-const alertPlaceholder = document.getElementById("liveAlertPlaceholder");
 export default {
   props: ["picture"],
   methods: {
@@ -62,7 +58,7 @@ export default {
       wrapper.innerHTML =
         '<div class="alert alert-success alert-dismissible" role="alert">已经开始下载<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
 
-      alertPlaceholder.append(wrapper);
+      document.getElementById("liveAlertPlaceholder").append(wrapper);
     },
   },
   data() {
