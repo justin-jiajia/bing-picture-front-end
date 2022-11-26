@@ -12,6 +12,10 @@
       </div>
     </transition>
   </router-view>
+  <hr />
+  <div class="f">
+    <small>所有图片版权均归Bing所有，本站仅存储！</small>
+  </div>
 </template>
 <script>
 import { data, base } from "./store/index";
