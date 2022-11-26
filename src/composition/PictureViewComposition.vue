@@ -33,10 +33,21 @@
 </template>
 <script>
 import { base } from "../store/index";
+var wrapper;
 export default {
   props: ["picture"],
   methods: {
     downLoadImg(imgsrc, name) {
+      if (
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
+      ) {
+        wrapper = document.createElement("div");
+        wrapper.innerHTML =
+          '<div class="alert alert-success alert-dismissible" role="alert">请长按图片保存<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+
+        document.getElementById("liveAlertPlaceholder").append(wrapper);
+        return;
+      }
       var image = new Image();
       // 解决跨域 Canvas 污染问题
       image.setAttribute("crossOrigin", "anonymous");
@@ -54,7 +65,7 @@ export default {
         a.dispatchEvent(event); // 触发a的单击事件
       };
       image.src = imgsrc;
-      var wrapper = document.createElement("div");
+      wrapper = document.createElement("div");
       wrapper.innerHTML =
         '<div class="alert alert-success alert-dismissible" role="alert">已经开始下载<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
 

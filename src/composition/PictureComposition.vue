@@ -15,19 +15,20 @@
         <small class="text-muted">{{ picture.file_name.slice(0, -4) }}</small>
       </p>
       <div class="btn-group" role="group" v-if="xs">
-        <a
+        <button
           class="btn btn-outline-primary"
           @click="downLoadImg(base + picture.file_name, picture.tittle)"
-          ><i class="bi bi-download"></i>下载</a
         >
+          <i class="bi bi-download"></i>下载
+        </button>
         <router-link
           :to="{ path: '/view', query: { id: index } }"
           class="btn btn-outline-primary"
           ><i class="bi bi-eye-fill"></i>查看详情</router-link
         >
-        <a class="btn btn-outline-primary" @click="share(index)"
-          ><i class="bi bi-box-arrow-up"></i>分享</a
-        >
+        <button class="btn btn-outline-primary" @click="share(index)">
+          <i class="bi bi-box-arrow-up"></i>分享
+        </button>
       </div>
     </div>
   </div>
@@ -42,7 +43,9 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">分享</h5>
+          <h5 class="modal-title" id="exampleModalLabel">
+            分享 - {{ picture.tittle }}
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -69,6 +72,7 @@ import { ref } from "vue";
 import html2canvas from "html2canvas";
 const im = ref("");
 const xs = ref(true);
+var wrapper;
 var inn = 0;
 var QRCode = require("qrcode");
 export default {
@@ -98,6 +102,16 @@ export default {
       }, 0);
     },
     downLoadImg(imgsrc, name) {
+      if (
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
+      ) {
+        wrapper = document.createElement("div");
+        wrapper.innerHTML =
+          '<div class="alert alert-success alert-dismissible" role="alert">请长按图片保存<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+
+        document.getElementById("liveAlertPlaceholder").append(wrapper);
+        return;
+      }
       var image = new Image();
       image.setAttribute("crossOrigin", "anonymous");
       image.onload = function () {
@@ -114,7 +128,7 @@ export default {
         a.dispatchEvent(event);
       };
       image.src = imgsrc;
-      var wrapper = document.createElement("div");
+      wrapper = document.createElement("div");
       wrapper.innerHTML =
         '<div class="alert alert-success alert-dismissible" role="alert">已经开始下载<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
 
