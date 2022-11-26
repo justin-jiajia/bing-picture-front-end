@@ -80,7 +80,11 @@ export default {
       setTimeout(function () {
         QRCode.toCanvas(
           document.getElementById("canvas" + inn),
-          document.domain + "/view?id=" + inn
+          window.location.protocol +
+            "//" +
+            window.location.host +
+            "/view?id=" +
+            inn
         );
         html2canvas(document.getElementById(inn), {
           scale: window.devicePixelRatio < 3 ? window.devicePixelRatio : 2,
