@@ -5,26 +5,20 @@
   </div>
   <hr />
   <div id="liveAlertPlaceholder"></div>
-  <router-view v-slot="{ Component }">
-    <transition name="fade">
-      <div>
-        <component :is="Component" />
-      </div>
-    </transition>
-  </router-view>
-  <hr />
-  <div class="f">
-    <small>所有图片版权均归Bing所有，本站仅存储！</small>
-  </div>
+  <router-view />
+  <div class="d">所有图片版权均归Bing所有，本站仅存储！</div>
 </template>
 <script>
 import { data, base } from "./store/index";
+import { ref } from "vue";
+const ws = ref(true);
 export default {
   setup() {
     require("axios")
       .default.get(base + "data.json")
       .then(function (response) {
         data.value = response.data.reverse();
+        ws.value = false;
       })
       .catch(function (error) {
         console.log(error);
@@ -33,6 +27,7 @@ export default {
   data() {
     return {
       data,
+      sw,
     };
   },
 };
@@ -40,5 +35,10 @@ export default {
 <style>
 .f {
   text-align: center;
+}
+.d {
+  position: fixed;
+  bottom: 0;
+  background: white;
 }
 </style>
