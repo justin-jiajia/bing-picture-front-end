@@ -4,6 +4,11 @@
     <h2>Bing每日一图</h2>
   </div>
   <hr />
+  <div class="d-flex justify-content-center" v-if="ws">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">正在加载</span>
+    </div>
+  </div>
   <div id="liveAlertPlaceholder"></div>
   <router-view />
   <div class="d">所有图片版权均归Bing所有，本站仅存储！</div>
@@ -27,7 +32,7 @@ export default {
   data() {
     return {
       data,
-      sw,
+      ws,
     };
   },
 };
