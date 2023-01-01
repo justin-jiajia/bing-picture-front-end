@@ -2,8 +2,13 @@
   <div class="f">
     <br />
     <h2>Bing每日一图</h2>
+    <hr />
   </div>
-  <hr />
+  <div class="f u">
+    <br />
+    <h2>Bing每日一图</h2>
+    <hr />
+  </div>
   <div class="d-flex justify-content-center" v-if="ws">
     <div class="spinner-border" role="status">
       <span class="visually-hidden">正在加载</span>
@@ -45,5 +50,12 @@ export default {
   position: fixed;
   bottom: 0;
   background: white;
+}
+.u {
+  position: fixed;
+  top: 0;
+  background: white;
+  width: 100%;
+  z-index: 999;
 }
 </style>
