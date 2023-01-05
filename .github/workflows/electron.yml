@@ -36,11 +36,11 @@ jobs:
         uses: thedoctor0/zip-release@main
         with:
           type: 'zip'
-          filename: d://green_${{ env.GITHUB_SHA }}.zip
+          filename: d://green_${{ github.sha }}.zip
           directory: 'dist_electron/win-unpacked'
       - name: Upload green
         uses: actions/upload-artifact@v3
         with:
-          name: windows-green-${{ env.GITHUB_SHA }}
+          name: windows-green-${{ github.sha }}
           path: |
-            d://green_${{ env.GITHUB_SHA }}.zip
+            d://green_${{ github.sha }}.zip
