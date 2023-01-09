@@ -9,14 +9,13 @@ module.exports = {
     },
   },
   pwa: {
-    name: "Bing每日一图",
-    themeColor: "#1AE66B",
-    msTileColor: "#1AE66B",
+    name: 'Bing每日一图',
+    themeColor: '#FFFFFF',
+    msTileColor: '#FFFFFF',
     manifestOptions: {
-      start_url: ".",
-      background_color: "#1AE66B",
+      start_url: '.',
+      background_color: '#FFFFFF'
     },
-    workboxPluginMode: "GenerateSW",
-    workboxOptions: {},
+    workboxOptions: {}
   },
 };

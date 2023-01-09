@@ -2,7 +2,7 @@
   <div class="card f" :id="index">
     <canvas class="canvas" :id="'canvas' + index" v-if="!xs"></canvas>
     <img
-      :src="base + picture.file_name"
+      v-lazy="base + picture.file_name"
       class="card-img-top"
       :alt="picture.tittle"
     />
