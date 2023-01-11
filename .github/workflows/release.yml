@@ -1,0 +1,30 @@
+name: Upload release to upyun
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+jobs:
+  get_and_upload:
+    name: Get latest release release and upload to upyun
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download requests
+      run: pip install requests
+    - name: Download python script
+      run: wget -O async.py https://gist.githubusercontent.com/justin-jiajia/cc671378ea8da42964bce5c3904ec9e8/raw/1f416dc67387b1403df237bd928c7ddc39954a06/async.py
+    - name: Run script
+      run: python ./async.py > d.txt
+    - name: MKdir
+      run: mkdir r
+    - name: Download releases
+      run: cd r && wget -i ../d.txt
+    - name: Download Upyun
+      run: wget -O upx http://collection.b0.upaiyun.com/softwares/upx/upx-linux-amd64-v0.1.3 && chmod +x ./upx
+    - name: Login to Upyun
+      run: ./upx login ${{ secrets.KJM_UPDATE }} ${{ secrets.USERNAME }} ${{ secrets.PASSWORD }}
+    - name: MKdir in Upyun
+      run: ./upx mkdir /bing-picture
+    - name: Del old items
+      run: ./upx rm /bing-picture/* 
+    - name: Update to Upyun
+      run: ./upx sync ./r /bing-picture
