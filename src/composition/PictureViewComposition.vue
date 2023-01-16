@@ -33,7 +33,7 @@
 </template>
 <script>
 import { base } from "../store/index";
-var wrapper;
+import Swal from "sweetalert2";
 export default {
   props: ["picture"],
   methods: {
@@ -41,11 +41,10 @@ export default {
       if (
         /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
       ) {
-        wrapper = document.createElement("div");
-        wrapper.innerHTML =
-          '<div class="alert alert-success alert-dismissible" role="alert">请长按图片保存<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-
-        document.getElementById("liveAlertPlaceholder").append(wrapper);
+        Swal.fire({
+          icon: "info",
+          title: "请长按图片保存",
+        });
         return;
       }
       var image = new Image();
@@ -57,19 +56,20 @@ export default {
         canvas.height = image.height;
         var context = canvas.getContext("2d");
         context.drawImage(image, 0, 0, image.width, image.height);
-        var url = canvas.toDataURL("image/png", 0.7); //得到图片的base64编码数据
-        var a = document.createElement("a"); // 生成一个a元素
-        var event = new MouseEvent("click"); // 创建一个单击事件
-        a.download = name ? name + ".png" : "photo.png"; // 设置图片名称
-        a.href = url; // 将生成的URL设置为a.href属性
-        a.dispatchEvent(event); // 触发a的单击事件
+        var url = canvas.toDataURL("image/png", 1.0);
+        var a = document.createElement("a");
+        var event = new MouseEvent("click");
+        a.download = name + ".png";
+        a.href = url;
+        a.dispatchEvent(event);
       };
       image.src = imgsrc;
-      wrapper = document.createElement("div");
-      wrapper.innerHTML =
-        '<div class="alert alert-success alert-dismissible" role="alert">已经开始下载<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-
-      document.getElementById("liveAlertPlaceholder").append(wrapper);
+      Swal.fire({
+        icon: "success",
+        title: "已开始下载",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     },
   },
   data() {

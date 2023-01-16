@@ -32,47 +32,13 @@
       </div>
     </div>
   </div>
-  <div id="xn" data-bs-toggle="modal" data-bs-target="#exampleModal" />
-  <div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            分享 - {{ picture.tittle }}
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="关闭"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <img :src="im" class="img-fluid" />
-        </div>
-        <div class="modal-footer">
-          <p>保存上面的图片以分享</p>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-            OK
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 <script>
 import { base } from "../store/index";
 import { ref } from "vue";
 import html2canvas from "html2canvas";
-const im = ref("");
+import Swal from "sweetalert2";
 const xs = ref(true);
-var wrapper;
 var inn = 0;
 var QRCode = require("qrcode");
 export default {
@@ -96,8 +62,13 @@ export default {
         }).then((canvas) => {
           xs.value = true;
           const imgData = canvas.toDataURL("image/jpeg", 1.0);
-          im.value = imgData;
-          document.getElementById("xn").click();
+          Swal.fire({
+            title: "分享",
+            html:
+              "<img class='swal2-image' src='" +
+              imgData +
+              "' />保存上面的图片以分享",
+          });
         });
       }, 0);
     },
@@ -105,11 +76,10 @@ export default {
       if (
         /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
       ) {
-        wrapper = document.createElement("div");
-        wrapper.innerHTML =
-          '<div class="alert alert-success alert-dismissible" role="alert">请长按图片保存<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-
-        document.getElementById("liveAlertPlaceholder").append(wrapper);
+        Swal.fire({
+          icon: "info",
+          title: "请长按图片保存",
+        });
         return;
       }
       var image = new Image();
@@ -128,17 +98,17 @@ export default {
         a.dispatchEvent(event);
       };
       image.src = imgsrc;
-      wrapper = document.createElement("div");
-      wrapper.innerHTML =
-        '<div class="alert alert-success alert-dismissible" role="alert">已经开始下载<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-
-      document.getElementById("liveAlertPlaceholder").append(wrapper);
+      Swal.fire({
+        icon: "success",
+        title: "已开始下载",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     },
   },
   data() {
     return {
       base,
-      im,
       xs,
     };
   },
