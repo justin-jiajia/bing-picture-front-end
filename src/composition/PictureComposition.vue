@@ -1,8 +1,8 @@
 <template>
-  <div class="card f" :id="index">
-    <canvas class="canvas" :id="'canvas' + index" v-if="!xs"></canvas>
+  <div class="card f" :id="picture.id">
+    <canvas class="canvas" :id="'canvas' + picture.id" v-if="!xs"></canvas>
     <img
-      v-lazy="base + picture.file_name"
+      :src="base + picture.file_name"
       class="card-img-top"
       :alt="picture.tittle"
     />
@@ -22,11 +22,11 @@
           <i class="bi bi-download"></i>下载
         </button>
         <router-link
-          :to="{ path: '/view', query: { id: index } }"
+          :to="{ path: '/view', query: { id: picture.id } }"
           class="btn btn-outline-primary"
           ><i class="bi bi-eye-fill"></i>查看详情</router-link
         >
-        <button class="btn btn-outline-primary" @click="share(index)">
+        <button class="btn btn-outline-primary" @click="share(picture.id)">
           <i class="bi bi-box-arrow-up"></i>分享
         </button>
       </div>
@@ -40,9 +40,9 @@ import html2canvas from "html2canvas";
 import Swal from "sweetalert2";
 const xs = ref(true);
 var inn = 0;
-var QRCode = require("qrcode");
+const QRCode = require("qrcode");
 export default {
-  props: ["picture", "index"],
+  props: ["picture"],
   methods: {
     share(index) {
       this.xs = false;
@@ -57,7 +57,6 @@ export default {
             inn
         );
         html2canvas(document.getElementById(inn), {
-          scale: window.devicePixelRatio < 3 ? window.devicePixelRatio : 2,
           useCORS: true,
         }).then((canvas) => {
           xs.value = true;

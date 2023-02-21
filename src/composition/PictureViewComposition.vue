@@ -25,6 +25,9 @@
               @click="downLoadImg(base + picture.file_name, picture.tittle)"
               ><i class="bi bi-download"></i>下载</a
             >
+            <router-link to="/" class="btn btn-outline-primary"
+              ><i class="bi bi-house-door"></i>回到首页</router-link
+            >
           </div>
         </div>
       </div>

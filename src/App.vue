@@ -9,11 +9,6 @@
     <h2>Bing每日一图</h2>
     <hr />
   </div>
-  <div class="d-flex justify-content-center" v-if="ws">
-    <div class="spinner-border" role="status">
-      <span class="visually-hidden">正在加载</span>
-    </div>
-  </div>
   <div id="liveAlertPlaceholder"></div>
   <router-view />
   <div class="d">
@@ -23,22 +18,8 @@
   </div>
 </template>
 <script>
-import { data, base } from "./store/index";
-import { ref } from "vue";
 import Swal from "sweetalert2";
-const ws = ref(true);
 export default {
-  setup() {
-    require("axios")
-      .default.get(base + "data.json")
-      .then(function (response) {
-        data.value = response.data.reverse();
-        ws.value = false;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  },
   methods: {
     do_d() {
       document.getElementById("download-j-link").click();
@@ -73,11 +54,9 @@ export default {
   },
   data() {
     return {
-      data,
-      ws,
       sho: !process.env.IS_ELECTRON,
       link:
-        "http://update-jia.test.upcdn.net/bing-picture/bing-picture-front-end-setup-" +
+        "https://update.hijiajia.xyz/bing-picture/bing-picture-front-end-setup-" +
         String(require("@/../package.json").version) +
         ".exe",
     };

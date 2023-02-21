@@ -1,12 +1,12 @@
 <template>
-  <picture-view-composition :picture="data[id]" />
+  <picture-view-composition :picture="now_data" />
 </template>
 <script>
 import { useRoute } from "vue-router";
 import { ref, watch } from "vue";
-import { data } from "../store/index";
+import { get_one } from "@/functions/index";
 import PictureViewComposition from "../composition/PictureViewComposition.vue";
-const id = ref(0);
+const now_data = ref({});
 export default {
   name: "ViewView",
   components: {
@@ -14,17 +14,20 @@ export default {
   },
   data() {
     return {
-      id,
-      data,
+      now_data,
     };
   },
   setup() {
     const route = useRoute();
-    id.value = Number(route.query.id);
+    get_one(route.query.id).then((k) => {
+      now_data.value = k;
+    });
     watch(
       () => route.query.id,
       async (newId) => {
-        id.value = Number(newId);
+        get_one(Number(newId)).then((k) => {
+          now_data.value = k;
+        });
       }
     );
   },
